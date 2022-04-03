@@ -19,7 +19,7 @@ MonoBehaviour:
   fourthFire: 0
   fifthFire: 0
   force: 11
-  cooldown: 0.11
+  cooldown: 0.105
   bulletLifetime: 2
   damage: 0.5
   bulletPrefab: {fileID: 6384791261573956859, guid: 3da37d839df53d249b8f768f06e8ac01,

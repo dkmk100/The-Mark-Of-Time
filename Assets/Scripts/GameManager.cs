@@ -15,6 +15,7 @@ public  class GameManager : MonoBehaviour
     public int misses = 0;
     public int shots = 0;
     public float movedAmount;
+    public float damgeTaken;
     public int totalMisses;
     public int totalShots;
     public float totalMovement;
@@ -27,6 +28,7 @@ public  class GameManager : MonoBehaviour
     public float timeSurvived = 0;
     public float worldSizeX = 9.5f;
     public float worldSizeY = 4.5f;
+    bool paused;
     public List<EnemyStats> killStats = new List<EnemyStats>();
     public List<EnemyStats> tempStats = new List<EnemyStats>();
 
@@ -50,6 +52,49 @@ public  class GameManager : MonoBehaviour
         GameManager.gameManager = this;
         ui = true;
         gameRunning = false;
+    }
+    public void TogglePause()
+    {
+        if (paused)
+        {
+            UnPause();
+        }
+        else
+        {
+            Pause();
+        }
+    }
+    public void Pause()
+    {
+        Time.timeScale = 0.0f;
+        if (gameRunning)
+        {
+            gameRunning = false;
+            paused = true;
+            uiManager.ShowPauseScreen();
+        }
+    }
+    public void UnPause()
+    {
+        Time.timeScale = 1.0f;
+        uiManager.HidePauseScreen();
+        if (paused)
+        {
+            gameRunning = true;
+            paused = false;
+        }
+    }
+    public void GiveUp()
+    {
+        //so you can't cheese stuff
+        movedAmount += 2;
+        misses += 2;
+        if (calcScore() == 42)
+        {
+            score -=3;
+        }
+        UnPause();
+        player.onDeath();
     }
     private void Start()
     {
@@ -120,6 +165,7 @@ public  class GameManager : MonoBehaviour
         shots = 0;
         movedAmount = 0;
         misses = 0;
+        damgeTaken = 0;
         player.gameObject.SetActive(true);
         tempStats = new List<EnemyStats>();//flush the temporary stats to refresh them. I love GC!
         achievementsManager.runAchievements = new List<Achievement>();//reset achivements this run

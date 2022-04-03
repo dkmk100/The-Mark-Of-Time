@@ -40,9 +40,9 @@ public class MusicHandler : MonoBehaviour
     IEnumerator SwapTrack()
     {
         source2.clip = nextMusic;
-        Debug.Log("Perparing to swap music in " + (source1.clip.length - source1.time) + "seconds");
+        //Debug.Log("Perparing to swap music in " + (source1.clip.length - source1.time) + "seconds");
         yield return new WaitForSeconds(source1.clip.length - source1.time);
-        Debug.Log("swapping music");
+        //Debug.Log("swapping music");
         source2.Play();
         source1.Stop();
         AudioSource temp = source1;

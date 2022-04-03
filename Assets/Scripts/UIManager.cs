@@ -42,18 +42,82 @@ public class UIManager : MonoBehaviour
     GameObject achievementsParent;
     [SerializeField]
     AudioClip mainMenuMusic;
+    [SerializeField]
+    GameObject pauseScreen;
+    [SerializeField]
+    GameObject hintsScreen;
+    [SerializeField]
+    Hint[] hints;
+    public Sprite hintSprite;
+    [SerializeField]
+    Text hintsText;
+    [SerializeField]
+    Text achievemenetsText;
+    [SerializeField]
+    Text statsText;
+    [SerializeField]
+    GameObject statsPage;
     private void Start()
     {
         gameManager = GameManager.gameManager;
         gameManager.uiManager = this;
         OpenMainMenu();
     }
+    public void DisplayStatsPage()
+    {
+        CloseAllUI();
+        string text = "Stats: "; 
+        text += "\nBest Score: " + gameManager.bestScore;
+        text += "\nBest Time: " + (Mathf.Round(gameManager.bestTime * 10f) / 10) + "s";
 
+        text += "\nWave Reached: " + gameManager.waveHandler.wave;
+
+        text += "\nAchievements: " + gameManager.achievementsManager.achievementsGotten + "/" + gameManager.achievementsManager.achievements.Count;
+
+        for (int i = 0; i < gameManager.killStats.Count; i++)
+        {
+            GameManager.EnemyStats stats = gameManager.killStats[i];
+            int killed = stats.amountKilled;
+
+            if (killed == 1)
+            {
+                text += "\nKilled " + killed + " enemy of type " + stats.enemyName + " in total";
+            }
+            else
+            {
+                text += "\nKilled " + killed + " enemies of type " + stats.enemyName + " in total";
+            }
+        }
+
+        statsText.text = text;
+        statsPage.SetActive(true);
+    }
     public void OpenMainMenu()
     {
         CloseAllUI();
         startScreen.SetActive(true);
         gameManager.musicHandler.SetTrackInstant(mainMenuMusic);
+    }
+
+    public void ShowHintsScreen()
+    {
+        CloseAllUI();
+        int achievements = gameManager.achievementsManager.achievementsGotten;
+        for(int i = 0; i < hints.Length; i++)
+        {
+            hints[i].UpdateHint(achievements,this);
+        }
+        hintsText.text = "Achievements: " + achievements + "/" + gameManager.achievementsManager.achievements.Count;
+        hintsScreen.SetActive(true);
+    }
+
+    public void ShowPauseScreen()
+    {
+        pauseScreen.SetActive(true);
+    }
+    public void HidePauseScreen()
+    {
+        pauseScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -140,13 +204,14 @@ public class UIManager : MonoBehaviour
     public void DisplayAchivements()
     {
         CloseAllUI();
-        achivementScreen.SetActive(true);
-        const int rowSize = 5;
-        const int spacing = 90;
-        const int spacingY = -90;
-        const int startX = 45;
-        const int startY = -40;
         List<Achievement> achievements = gameManager.achievementsManager.achievements;
+        achievemenetsText.text = "Achievements: " + gameManager.achievementsManager.achievementsGotten + "/" + achievements.Count;
+        achivementScreen.SetActive(true);
+        const int rowSize = 6;
+        const int spacing = 83;
+        const int spacingY = -86;
+        const int startX = 40;
+        const int startY = -25;
         int i = 0;
         while (i < displays.Count || i<achievements.Count)
         {
@@ -176,8 +241,10 @@ public class UIManager : MonoBehaviour
     
     void CloseAllUI()
     {
+        statsPage.SetActive(false);
         achivementScreen.SetActive(false);
         howToPlayScreen.SetActive(false);
+        hintsScreen.SetActive(false);
         startScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         HideTooltip();
@@ -206,6 +273,7 @@ public class UIManager : MonoBehaviour
     }
     public void ShowGameOverScreen()
     {
+        gameManager.musicHandler.SetTrackInstant(mainMenuMusic);//ensures parity in menu music
         onGameOverScreen = true;
         string text = "Score: " + gameManager.score + ", Best Score: "+gameManager.bestScore;
         if(gameManager.bestScore == gameManager.score)

@@ -8,6 +8,7 @@ public class AchievementsManager : MonoBehaviour
     public List<Achievement> runAchievements = new List<Achievement>();
     public List<AchievementRequirement> triggered = new List<AchievementRequirement>();
     public GameManager manager;
+    public int achievementsGotten;
 
     public void Start()
     {
@@ -45,7 +46,8 @@ public class AchievementsManager : MonoBehaviour
         {
             if(achievements[i].tryComplete(this, endOfGame))
             {
-                runAchievements.Add(achievements[i]);//unused, might use later if there's time
+                achievementsGotten += 1;//for the hints system
+                runAchievements.Add(achievements[i]);//unused, might use later if there's time       update: probably won't have time for this kindo fancy UI stuff
                 manager.uiManager.NotifyAchievement(achievements[i]);//so you see the banner
             }
         }
@@ -201,6 +203,10 @@ public class AchievementRequirement
                 value = manager.totalMovement;
             }
         }
+        else if (type == RequirementType.damageTaken)
+        {
+                value = manager.damgeTaken;
+        }
         bool valid = false;
         if(comparison == ComparisonType.greater)
         {
@@ -234,6 +240,6 @@ public class AchievementRequirement
     }
 }
 [System.Serializable]
-public enum RequirementType { score, time, wave, killEnemies, shots, misses, movement, triggered};
+public enum RequirementType { score, time, wave, killEnemies, shots, misses, movement, damageTaken, triggered};
 [System.Serializable]
 public enum ComparisonType { greater, equal, lesser, notEqual }

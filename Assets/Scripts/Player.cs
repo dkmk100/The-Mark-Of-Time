@@ -103,9 +103,17 @@ public class Player : MonoBehaviour
             }
         }
     }
-    private void Update()
+    void Update()
     {
-        if (gameManager.gameRunning)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SetWeapon(weapon + 1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+        {
+            gameManager.TogglePause();
+        }
+        else if (gameManager.gameRunning)
         {
             GetMovement();
             if (Input.GetButton("Fire"))
@@ -132,10 +140,6 @@ public class Player : MonoBehaviour
             {
                 SetWeapon(weapon + 1);
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SetWeapon(weapon + 1);
-            }
             UpdateSprite();
         }
         //Debug.Log(Input.mousePosition);
@@ -151,7 +155,7 @@ public class Player : MonoBehaviour
     void DoMovement()
     {
         rb.velocity = movement;
-        gameManager.movedAmount += Time.fixedDeltaTime;
+        gameManager.movedAmount += movement.magnitude * Time.fixedDeltaTime;
     }
     void UpdateSprite()
     {
@@ -195,6 +199,7 @@ public class Player : MonoBehaviour
         if (!dead)
         {
             lifeRemaining -= amount;
+            gameManager.damgeTaken += amount;
             if (lifeRemaining <= 0)
             {
                 onDeath();
@@ -202,7 +207,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void onDeath()
+    public void onDeath()
     {
         dead = true;
         rend.sprite = deadSprite;

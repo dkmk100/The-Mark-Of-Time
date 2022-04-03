@@ -108,17 +108,29 @@ public class WaveHandler : MonoBehaviour
     EnemySpawn[] prepareWave(int wave)
     {
         List<EnemySpawn> spawns = new List<EnemySpawn>();
-        float enemyCount = 1 + (0.6f * wave + 0.1f * Mathf.Pow(wave, 1.1f));//new enemies are very slow
-        float enemyDifficulty = 0.8f + 0.4f * wave + 0.3f * Mathf.Pow(wave, 1.25f);//new difficulty is not, so we get more hard enemies not only in count, but in ratio as the game progresses
+        float enemyCount = 1 + (0.62f * wave + 0.05f * Mathf.Pow(wave, 1.05f));//new enemies are very slow
+        float enemyDifficulty = 0.8f + 0.6f * wave + 0.21f * Mathf.Pow(wave, 1.15f);//new difficulty is not, so we get more hard enemies not only in count, but in ratio as the game progresses
+
+        //old values from day 1, as a backup:
+        /*
+        float enemyCount = 1 + (0.6f * wave + 0.1f * Mathf.Pow(wave, 1.1f));
+        float enemyDifficulty = 0.8f + 0.4f * wave + 0.3f * Mathf.Pow(wave, 1.25f);
+        hard enemy threshold was 2 above normal, with these stats:
+        enemyDifficulty -= 2.4f;
+        enemyCount -= 1.2f;
+        normal enemy threshhold was normal, with these stats:
+        enemyDifficulty -= 1.05f;
+        enemyCount -= 0.4f;
+        */
         int i = 0;
         while (i < enemyCount)
         {
             EnemySpawn spawn;
             GameObject enemyPrefab = null;
-            if (enemyDifficulty >= enemyCount + 2.0f && hardEnemies.Length > 0)
+            if (enemyDifficulty >= enemyCount + 1.85f && hardEnemies.Length > 0)
             {
-                enemyDifficulty -= 2.4f;
-                enemyCount -= 1.2f;
+                enemyDifficulty -= 3.3f;
+                enemyCount -= 2f;
 
                 int id = Random.Range(0, hardEnemies.Length);
                 if (id >= hardEnemies.Length)
@@ -130,8 +142,8 @@ public class WaveHandler : MonoBehaviour
             }
             else if (enemyDifficulty >= enemyCount && mediumEnemies.Length > 0)
             {
-                enemyDifficulty -= 1.05f;
-                enemyCount -= 0.4f;
+                enemyDifficulty -= 1.25f;
+                enemyCount -= 0.6f;
 
                 int id = Random.Range(0, mediumEnemies.Length);
                 if (id >= mediumEnemies.Length)
