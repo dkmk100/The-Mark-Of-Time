@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b03ee87d16725140b06a0b17d1ca8f2, type: 3}
+  m_Name: LavaSlimeWeapon
+  m_EditorClassIdentifier: 
+  bulletAmount: 1
+  mainFire: 1
+  secondaryFire: 0
+  thirdFire: 0
+  fourthFire: 0
+  fifthFire: 0
+  force: 8
+  cooldown: 0.65
+  bulletLifetime: 1
+  damage: 4
+  bulletPrefab: {fileID: 5216530561021951052, guid: 2409841e1e8d1b5419a8f7b9f1f84c7d,
+    type: 3}
+  sprite: {fileID: 21300000, guid: 2da54a2f3ccf1a846951b16439a8eb1c, type: 3}
+  sound: {fileID: 0}
+  volume: 1
+  manaUsed: 0
+  positionRandomness: {x: 0, y: 0, z: 0}
+  rotationRandomness: 2
+  completelyRandomRotation: 0

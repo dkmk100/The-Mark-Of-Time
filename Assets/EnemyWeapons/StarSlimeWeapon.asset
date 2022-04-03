@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b03ee87d16725140b06a0b17d1ca8f2, type: 3}
+  m_Name: StarSlimeWeapon
+  m_EditorClassIdentifier: 
+  bulletAmount: 1
+  mainFire: 0
+  secondaryFire: 0
+  thirdFire: 1
+  fourthFire: 0
+  fifthFire: 0
+  force: 5
+  cooldown: 0.5
+  bulletLifetime: 1
+  damage: 2.5
+  bulletPrefab: {fileID: 6604778554938171189, guid: 11a9bcc0c9264b64fbec7bb10fdeb3a1,
+    type: 3}
+  sprite: {fileID: 21300000, guid: a6ad545ff26b08f49a37bd59b484818a, type: 3}
+  sound: {fileID: 0}
+  volume: 1
+  manaUsed: 0
+  positionRandomness: {x: 0, y: 0, z: 0}
+  rotationRandomness: 2
+  completelyRandomRotation: 0
