@@ -217,6 +217,7 @@ public class Player : MonoBehaviour
     {
         dead = true;
         rend.sprite = deadSprite;
+        lastId = playerSprites.Length;//above the max amount, fixes playing as grave bug
         gameManager.EndGame();
     }
 
