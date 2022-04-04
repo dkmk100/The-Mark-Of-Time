@@ -28,6 +28,8 @@ public class WaveHandler : MonoBehaviour
     public int worldSizeX;
     public int worldSizeY;
 
+    Coroutine waveRoutine;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +43,7 @@ public class WaveHandler : MonoBehaviour
     {
         if (!spawningWave && enemies.Count == 0)//should be no enemies
         {
-            StartCoroutine(nextWave());
+            waveRoutine = StartCoroutine(nextWave());
         }
     }
 
@@ -64,6 +66,10 @@ public class WaveHandler : MonoBehaviour
             Destroy(obj);
         }
         enemies = new List<GameObject>();
+        if (waveRoutine != null)
+        {
+            StopCoroutine(waveRoutine);
+        }
     }
     
 

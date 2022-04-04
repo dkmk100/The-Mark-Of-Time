@@ -77,6 +77,12 @@ public class Player : MonoBehaviour
         rend.sprite = playerSprites[lastId];
         SetWeapon(0);
     }
+    public void PreInitialize()
+    {
+        lifeRemaining = maxLife;
+        UpdateSprite();
+        this.transform.position = Vector3.zero;
+    }
     public void Initialize()
     {
         nextBullet = Time.time + 0.1f;

@@ -66,11 +66,12 @@ public  class GameManager : MonoBehaviour
     }
     public void Pause()
     {
-        Time.timeScale = 0.0f;
+        paused = true;
         if (gameRunning)
         {
+            Time.timeScale = 0.0f;
             gameRunning = false;
-            paused = true;
+
             uiManager.ShowPauseScreen();
         }
     }
@@ -170,6 +171,7 @@ public  class GameManager : MonoBehaviour
         tempStats = new List<EnemyStats>();//flush the temporary stats to refresh them. I love GC!
         achievementsManager.runAchievements = new List<Achievement>();//reset achivements this run
         waveHandler.Flush();
+        player.PreInitialize();
         musicHandler.SetTrackInstant(waveHandler.gameMusic[0]);
         uiManager.DisableStartScreen();
         StartCoroutine(DoStartGame());
